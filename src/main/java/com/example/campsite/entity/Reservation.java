@@ -18,6 +18,7 @@ public class Reservation {
     private Long id;
 
     @ManyToOne(cascade = {CascadeType.DETACH})
+    @JoinColumn(name = "campsite_id")
     @JsonBackReference
     private Campsite campsite;
 

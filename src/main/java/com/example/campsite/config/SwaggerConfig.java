@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(true)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.demo.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.campsite.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
