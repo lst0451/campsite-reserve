@@ -121,7 +121,7 @@ public class CampsiteService {
         }
     }
 
-    public static Set<LocalDate> getOneMonthDays(LocalDate fromDate, LocalDate toDate) {
+    private Set<LocalDate> getOneMonthDays(LocalDate fromDate, LocalDate toDate) {
         LocalDate from = null;
         LocalDate endDate = null;
         LocalDate now = LocalDate.now();

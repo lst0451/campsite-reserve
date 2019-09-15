@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "0378e44c-e24a-4330-a1f3-412f9e402477",
+		"name": "Campsite Reservation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/campsites",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/campsites",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"campsites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/campsite/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/campsite/1?fromDate=2019-09-20&toDate=2019-09-28",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"campsite",
+						"1"
+					],
+					"query": [
+						{
+							"key": "fromDate",
+							"value": "2019-09-20"
+						},
+						{
+							"key": "toDate",
+							"value": "2019-09-28"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/reservation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"shitao.ca@gamil.com\",\n    \"fullName\": \"Shitao Li\",\n    \"arrivalDate\": \"2019-09-16\",\n    \"departureDate\": \"2019-09-17\",\n    \"campsite\":{\n    \t\"id\":1\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/reservation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/reservation/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reservation/4028b8816d36fc00016d36fdef0d0001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"4028b8816d36fc00016d36fdef0d0001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/reservation/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reservation/4028b8816d36fc00016d36fdef0d0001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"4028b8816d36fc00016d36fdef0d0001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
