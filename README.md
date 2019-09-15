@@ -7,14 +7,14 @@ You have already installed Git.
 Your 8080 port is available ( otherwise you need to modify it in application file ).  
 
 You can pick up one on of the two method to run:      
-#####Method 1:  
+##### Method 1:  
 ```
 git clone https://github.com/lst0451/campsite-reserve.git
 cd campsite
 mvn spring-boot:run
 ```
 
-#####Method 2:
+##### Method 2:
 
 ```
 mvn package
@@ -26,7 +26,7 @@ run:
 java -jar campsite.jar
 ```
 
-###Main Requests:
+### Main Requests:
 If you have a postman, I suggest you import the "Campsite Reservation.postman_collection.json" file into your postman, which is more convenient to use.  
 If you don't want to use postman, you can still use command line to test the API:  
 * Get all campsite data and available date for reservation.(A default campsite will be created after system started.)  
