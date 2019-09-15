@@ -86,6 +86,9 @@ public class CampsiteService {
         if (!arrivalDate.isBefore(departureDate)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Arrival date should be early than departure date.");
         }
+        if (!arrivalDate.isAfter(now)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The campsite can be reserved minimum 1 day(s) ahead of arrival");
+        }
         if (arrivalDate.isAfter(now.plusMonths(1))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The campsite can be reserved up to 1 month in advance.");
         }
@@ -158,5 +161,10 @@ public class CampsiteService {
     public ResponseEntity deleteReservationById(String id) {
         reservationRepository.deleteById(id);
         return ResponseEntity.accepted().build();
+    }
+
+    public ResponseEntity getAllReservation() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        return ResponseEntity.ok(reservations);
     }
 }
