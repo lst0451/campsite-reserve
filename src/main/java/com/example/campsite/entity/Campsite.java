@@ -25,7 +25,6 @@ public class Campsite {
     private Set<LocalDate> availableDate;
 
     @OneToMany(mappedBy = "campsite", fetch = FetchType.EAGER)
-//    @JsonManagedReference
     @JsonIgnore
     private List<Reservation> reservations;
 

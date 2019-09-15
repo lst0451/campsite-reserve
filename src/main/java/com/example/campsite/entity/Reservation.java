@@ -1,6 +1,7 @@
 package com.example.campsite.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -34,6 +35,7 @@ public class Reservation {
     private LocalDate departureDate;
 
     @Transient
+    @JsonProperty(value = "reservedDate")
     private Set<LocalDate> occupiedDate = new LinkedHashSet<>();
 
     public Set<LocalDate> getOccupiedDate() {

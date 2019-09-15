@@ -7,6 +7,7 @@ import com.example.campsite.repository.ReservationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -78,11 +79,15 @@ public class CampsiteService {
     private boolean checkAvailability(Reservation reservation) {
         LocalDate arrivalDate = reservation.getArrivalDate();
         LocalDate departureDate = reservation.getDepartureDate();
+        LocalDate now = LocalDate.now();
         if (arrivalDate == null || departureDate == null) {
-            throw new RuntimeException("Reservation date shouldn't be null");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation date shouldn't be null");
         }
         if (!arrivalDate.isBefore(departureDate)) {
-            throw new RuntimeException("Arrival date should be early than departure date.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Arrival date should be early than departure date.");
+        }
+        if (arrivalDate.isAfter(now.plusMonths(1))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The campsite can be reserved up to 1 month in advance.");
         }
         Campsite campsite = reservation.getCampsite();
         if (campsite == null) {
@@ -90,7 +95,7 @@ public class CampsiteService {
         }
         int reserveDays = arrivalDate.until(departureDate).getDays();
         if (reserveDays > 3) {
-            throw new RuntimeException("The campsite can be reserved for max 3 days.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The campsite can be reserved for max 3 days.");
         }
         Set<LocalDate> reserveDate = new LinkedHashSet<>();
         for (int i = 0; i < reserveDays; i++) {
@@ -101,17 +106,16 @@ public class CampsiteService {
             processSingleCampsite(arrivalDate, departureDate, campsiteInDb);
             Set<LocalDate> availableDays = campsiteInDb.get().getAvailableDate();
             if (availableDays.size() < reserveDays) {
-                throw new RuntimeException("Overlapping reservation days.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Overlapping reservation days.");
             }
             if (availableDays.containsAll(reserveDate)) {
                 return true;
             } else {
-                throw new RuntimeException("Overlapping reservation days.");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Overlapping reservation days.");
             }
         } else {
-            throw new RuntimeException("Campsite doesn't exist.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Campsite doesn't exist.");
         }
-//        return true;
     }
 
     public static Set<LocalDate> getOneMonthDays(LocalDate fromDate, LocalDate toDate) {
@@ -140,5 +144,19 @@ public class CampsiteService {
             days.add(from.plusDays(i));
         }
         return days;
+    }
+
+    public ResponseEntity getReservationById(String id) {
+        Optional<Reservation> byId = reservationRepository.findById(id);
+        if (byId.isPresent()) {
+            return ResponseEntity.ok(byId.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    public ResponseEntity deleteReservationById(String id) {
+        reservationRepository.deleteById(id);
+        return ResponseEntity.accepted().build();
     }
 }

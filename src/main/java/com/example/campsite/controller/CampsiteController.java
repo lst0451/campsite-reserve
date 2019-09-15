@@ -35,8 +35,17 @@ public class CampsiteController {
 
     @PostMapping("/reservation")
     public ResponseEntity reserveCampsite(@RequestBody Reservation reservation) {
-//        System.out.println(reservation);
         return service.reserveCampsite(reservation);
-//        return null;
     }
+
+    @GetMapping("/reservation/{id}")
+    public ResponseEntity getReservation(@PathVariable String id) {
+        return service.getReservationById(id);
+    }
+
+    @DeleteMapping("/reservation/{id}")
+    public ResponseEntity cancelReservation(@PathVariable String id) {
+        return service.deleteReservationById(id);
+    }
+
 }
