@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,7 +26,19 @@ public class Reservation {
 
     private String email;
     private String fullName;
+    @Column(nullable = false)
     private LocalDate arrivalDate;
+    @Column(nullable = false)
     private LocalDate departureDate;
 
+    @Transient
+    private Set<LocalDate> occupiedDate;
+
+    public Set<LocalDate> getOccupiedDate() {
+        Period period = Period.between(arrivalDate, departureDate);
+        for (int i = 0; i < period.getDays(); i++) {
+            occupiedDate.add(arrivalDate.plusDays(i));
+        }
+        return occupiedDate;
+    }
 }
