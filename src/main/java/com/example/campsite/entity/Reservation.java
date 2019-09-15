@@ -15,10 +15,11 @@ import java.util.Set;
 @Getter
 @Setter
 public class Reservation {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     @ManyToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "campsite_id")

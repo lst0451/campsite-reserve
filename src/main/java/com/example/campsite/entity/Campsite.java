@@ -1,6 +1,6 @@
 package com.example.campsite.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,10 +22,11 @@ public class Campsite {
     private String name;
 
     @Transient
-    private Set<LocalDate> availableDays;
+    private Set<LocalDate> availableDate;
 
-    @OneToMany(mappedBy = "campsite")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "campsite", fetch = FetchType.EAGER)
+//    @JsonManagedReference
+    @JsonIgnore
     private List<Reservation> reservations;
 
 
