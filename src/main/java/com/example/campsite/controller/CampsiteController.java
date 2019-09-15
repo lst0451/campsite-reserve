@@ -24,9 +24,9 @@ public class CampsiteController {
     }
 
     @GetMapping("/campsite/{id}")
-    public ResponseEntity getCampisiteById(@PathVariable Long id,
-                                           @RequestParam(value = "fromDate", required = false) String fromDate,
-                                           @RequestParam(value = "toDate", required = false) String toDate) {
+    public ResponseEntity getCampsiteById(@PathVariable Long id,
+                                          @RequestParam(value = "fromDate", required = false) String fromDate,
+                                          @RequestParam(value = "toDate", required = false) String toDate) {
         Optional<Campsite> campsite = service.getCampsiteAndAvailableDate(id, fromDate, toDate);
         if (campsite.isPresent()) {
             return ResponseEntity.ok(campsite);

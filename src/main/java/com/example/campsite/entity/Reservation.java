@@ -7,7 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -32,11 +33,11 @@ public class Reservation {
     private LocalDate departureDate;
 
     @Transient
-    private Set<LocalDate> occupiedDate;
+    private Set<LocalDate> occupiedDate = new LinkedHashSet<>();
 
     public Set<LocalDate> getOccupiedDate() {
-        Period period = Period.between(arrivalDate, departureDate);
-        for (int i = 0; i < period.getDays(); i++) {
+        long until = arrivalDate.until(departureDate, ChronoUnit.DAYS);
+        for (int i = 0; i < until; i++) {
             occupiedDate.add(arrivalDate.plusDays(i));
         }
         return occupiedDate;
