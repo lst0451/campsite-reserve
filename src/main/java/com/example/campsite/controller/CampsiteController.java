@@ -20,7 +20,7 @@ public class CampsiteController {
 
     @GetMapping("/campsites")
     public ResponseEntity<?> getAllCampsites() {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(service.getAllCampsites());
     }
 
     @GetMapping("/campsite/{id}")
