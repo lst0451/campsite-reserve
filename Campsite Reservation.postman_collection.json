@@ -55,6 +55,25 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8080/reservations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reservations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8080/reservation",
 			"request": {
 				"method": "POST",
@@ -68,7 +87,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"shitao.ca@gamil.com\",\n    \"fullName\": \"Shitao Li\",\n    \"arrivalDate\": \"2019-09-16\",\n    \"departureDate\": \"2019-09-17\",\n    \"campsite\":{\n    \t\"id\":1\n    }\n}"
+					"raw": "{\n    \"email\": \"shitao.ca@gamil.com\",\n    \"fullName\": \"Shitao Li\",\n    \"arrivalDate\": \"2019-09-20\",\n    \"departureDate\": \"2019-09-22\",\n    \"campsite\":{\n    \t\"id\":1\n    }\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/reservation",
@@ -90,7 +109,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/reservation/4028b8816d36fc00016d36fdef0d0001",
+					"raw": "http://localhost:8080/reservation/4028b8816d3fd1a4016d3fd337950000",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -98,7 +117,7 @@
 					"port": "8080",
 					"path": [
 						"reservation",
-						"4028b8816d36fc00016d36fdef0d0001"
+						"4028b8816d3fd1a4016d3fd337950000"
 					]
 				}
 			},
@@ -110,7 +129,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/reservation/4028b8816d36fc00016d36fdef0d0001",
+					"raw": "http://localhost:8080/reservation/4028b8816d373bd1016d373c06eb0000",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -118,7 +137,7 @@
 					"port": "8080",
 					"path": [
 						"reservation",
-						"4028b8816d36fc00016d36fdef0d0001"
+						"4028b8816d373bd1016d373c06eb0000"
 					]
 				}
 			},
