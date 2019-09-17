@@ -2,10 +2,12 @@ package com.example.campsite.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,6 +24,7 @@ public class Reservation {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @ApiModelProperty(hidden = true)
     private String id;
 
     @ManyToOne(cascade = {CascadeType.DETACH})
@@ -38,6 +41,7 @@ public class Reservation {
 
     @Transient
     @JsonProperty(value = "reservedDate")
+    @ApiModelProperty(hidden = true)
     private Set<LocalDate> occupiedDate = new LinkedHashSet<>();
 
     public Set<LocalDate> getOccupiedDate() {

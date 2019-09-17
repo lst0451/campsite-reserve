@@ -25,6 +25,15 @@ run:
 ```
 java -jar campsite.jar
 ```
+### How to access
+This system integrates Swagger2 for testing API access.  
+http://localhost:8080/swagger-ui.html#
+
+If you want to check database, you can access:  
+http://localhost:8080/h2-console/  
+JDBC URL: jdbc:h2:mem:campsite  
+User Name: sa  
+Password: sa  
 
 ### Main Requests:
 If you have a postman, I suggest you import the "Campsite Reservation.postman_collection.json" file into your postman, which is more convenient to use.  
@@ -49,11 +58,11 @@ curl -X POST "http://localhost:8080/reservation" -H "accept: */*" -H "Content-Ty
 ```
 curl -X GET "http://localhost:8080/reservations" -H "accept: */*"
 ```
-* Get reservation by id which returned by create API.
+* Get reservation by id which returned by create API.(Replace {reserveId} with a real id.)
 ```
 curl -X GET "http://localhost:8080/reservation/{reserveId}" -H "accept: */*"
 ```
-* Cancel reservation by id.
+* Cancel reservation by id.(Replace {reserveId} with a real id.)
 ```
 curl -X DELETE "http://localhost:8080/reservation/{reserveId}" -H "accept: */*"
 ```

@@ -1,6 +1,7 @@
 package com.example.campsite.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,9 +22,11 @@ public class Campsite {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
+    @ApiModelProperty(hidden = true)
     private String name;
 
     @Transient
+    @ApiModelProperty(hidden = true)
     private Set<LocalDate> availableDate;
 
     @OneToMany(mappedBy = "campsite", fetch = FetchType.EAGER)
