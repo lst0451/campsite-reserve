@@ -7,6 +7,7 @@ import com.example.campsite.repository.ReservationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -25,12 +26,22 @@ public class CampsiteService {
         this.reservationRepository = reservationRepository;
     }
 
+    /**
+     * Initialize a new campsite when system start.
+     */
     public void init() {
         Campsite campsite = new Campsite();
         campsite.setName("Pacific Island");
         campsiteRepository.save(campsite);
     }
 
+    /**
+     * Get all campsite data.
+     * The available date defaults to one month,
+     * while removing dates that have been occupied by other reservations.
+     *
+     * @return Campsite list.
+     */
     public List<Campsite> getAllCampsites() {
         List<Campsite> all = campsiteRepository.findAll();
         all.forEach(c -> {
@@ -39,6 +50,17 @@ public class CampsiteService {
         return all;
     }
 
+    /**
+     * Get single campsite data by campsite id.
+     * If the from date is empty, the default is the from date is tomorrow,
+     * if the to date is empty, the default to date is one month later,
+     * while removing dates that have been occupied by other reservations.
+     *
+     * @param id       Campsite id.
+     * @param fromDate from date.
+     * @param toDate   to date.
+     * @return Campsite.
+     */
     public Optional<Campsite> getCampsiteAndAvailableDate(Long id, String fromDate, String toDate) {
         Optional<Campsite> campsite = campsiteRepository.findById(id);
         LocalDate from = null;
@@ -67,7 +89,14 @@ public class CampsiteService {
         campsite.get().setAvailableDate(oneMonthDays);
     }
 
-    public synchronized ResponseEntity reserveCampsite(Reservation reservation) {
+    /**
+     * Reserve a campsite.
+     * The reservation information will be verified before the reservation is saved.
+     *
+     * @param reservation Reservation data.
+     * @return Reservation result.
+     */
+    public /*synchronized*/ ResponseEntity reserveCampsite(Reservation reservation) {
         if (checkAvailability(reservation)) {
             Reservation savedReservation = reservationRepository.save(reservation);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedReservation);
@@ -80,6 +109,9 @@ public class CampsiteService {
         LocalDate arrivalDate = reservation.getArrivalDate();
         LocalDate departureDate = reservation.getDepartureDate();
         LocalDate now = LocalDate.now();
+        if (StringUtils.isEmpty(reservation.getEmail()) || StringUtils.isEmpty(reservation.getFullName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email and full name shouldn't be null");
+        }
         if (arrivalDate == null || departureDate == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservation date shouldn't be null");
         }
@@ -126,13 +158,11 @@ public class CampsiteService {
         LocalDate endDate = null;
         LocalDate now = LocalDate.now();
         if (fromDate != null) {
-//            from = LocalDate.parse(fromDate);
             from = fromDate;
         } else {
             from = now.plusDays(1);
         }
         if (toDate != null) {
-//            endDate = LocalDate.parse(toDate);
             endDate = toDate;
             LocalDate oneMonthLater = now.plusMonths(1);
             if (endDate.isAfter(oneMonthLater)) {
@@ -163,7 +193,7 @@ public class CampsiteService {
         return ResponseEntity.accepted().build();
     }
 
-    public ResponseEntity getAllReservation() {
+    public ResponseEntity<List<Reservation>> getAllReservation() {
         List<Reservation> reservations = reservationRepository.findAll();
         return ResponseEntity.ok(reservations);
     }

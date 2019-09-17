@@ -20,7 +20,7 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations")
-    public ResponseEntity getAllReservation(){
+    public ResponseEntity getAllReservation() {
         return service.getAllReservation();
     }
 

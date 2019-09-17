@@ -57,3 +57,6 @@ curl -X GET "http://localhost:8080/reservation/{reserveId}" -H "accept: */*"
 ```
 curl -X DELETE "http://localhost:8080/reservation/{reserveId}" -H "accept: */*"
 ```
+#### Test Case
+Test cases are used to test concurrent access situations, ensuring that the same date will not be reserved by different people.
+
